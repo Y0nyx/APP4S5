@@ -22,5 +22,10 @@ if __name__ == '__main__':
     # La fonction es stable car les pôles sont dans le cercle unitaire
     #zplane.zplane(num2, den2)
 
-    # Comparaison différent type de filtre
-    PictureManager.ComparaisonFiltre(500, 750, 0.2, 60, 1600)
+    # Comparaison différent type de filtre et filtre du bruit
+    img = np.load("img\\goldhill_aberrations.npy")
+    mpimg.imsave("img\\goldhill_bruit.png", arr=img, cmap="gray")
+    N, Wn = PictureManager.ComparaisonFiltre(500, 750, 0.2, 60, 1600)
+    PictureManager.filterAndCreateElliFilter(N, Wn, img)
+
+
