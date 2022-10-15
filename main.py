@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.image as mpimg
 import PictureManager
+import zplane
 
 if __name__ == '__main__':
     # abberation
@@ -13,4 +14,11 @@ if __name__ == '__main__':
     img_color = mpimg.imread("img\\goldhill_rotate.png")
     img = np.mean(img_color, -1)
     PictureManager.rotation90degree(img)
+
+    #Filtre en utilisant la transformation bilinéaire
+    a = 0.418163346
+    num2 = np.roots([a, 2*a, a])
+    den2 = np.roots([1, 0.462937924, 0.209715358])
+    # La fonction es stable car les pôles sont dans le cercle unitaire
+    zplane.zplane(num2, den2)
 

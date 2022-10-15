@@ -29,3 +29,4 @@ def rotation90degree (img):
             EmptyArray[x][y] = img[coordX][coordY]
     mpimg.imsave("imgFinale\\goldhill_rotate_Finale.png", arr=EmptyArray)
 
+
