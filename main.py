@@ -20,5 +20,7 @@ if __name__ == '__main__':
     num2 = np.roots([a, 2*a, a])
     den2 = np.roots([1, 0.462937924, 0.209715358])
     # La fonction es stable car les pôles sont dans le cercle unitaire
-    zplane.zplane(num2, den2)
+    #zplane.zplane(num2, den2)
 
+    # Comparaison différent type de filtre
+    PictureManager.ComparaisonFiltre(500, 750, 0.2, 60, 1600)
