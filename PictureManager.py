@@ -13,6 +13,7 @@ def revertAbberation(img, num, den):
     # Filtre et enregistre l'image finale
     FiltedImg = signal.lfilter(den, num, img)
     mpimg.imsave("imgFinale\\goldhill_abberations_Finale.png", arr=FiltedImg, cmap="gray")
+    return(img)
 
 def rotation90degree (img):
     # Trouver les longueur des column and row
