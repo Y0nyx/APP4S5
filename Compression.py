@@ -18,14 +18,13 @@ def compression(img, percent):
 
 
     #Decompressé l'image
-    # passage_inv = np.inv(vecPropre)
-    # imageFinale = np.matmul(vecPropre, img)
     imageDecompresse = np.matmul(np.linalg.inv(vecPropre), matriceDePassage)
     matplotlib.image.imsave("imgFinale\\ "+ str(percent) + "decompresse.png", arr=imageDecompresse, cmap='gray')
 
-
-    #plt.imshow(matriceDePassage, cmap ='gray')
-    #plt.title(f"Image compressée de {percent}%")
-    #plt.imshow(imageDecompresse, cmap ='gray')
-    #plt.title(f"Image décompressé suivant la compresse de {percent}%")
-    #plt.show()
+    plt.subplot(1, 2, 1)
+    plt.imshow(matriceDePassage, cmap ='gray')
+    plt.title(f"Image compressée de {percent}%")
+    plt.subplot(1, 2, 2)
+    plt.imshow(imageDecompresse, cmap ='gray')
+    plt.title(f"Image décompressé suivant la compresse de {percent}%")
+    plt.show()
