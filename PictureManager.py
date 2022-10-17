@@ -19,12 +19,11 @@ def revertAbberation(img, num, den):
 
 def rotation90degree(img):
     # Trouver les longueur des column and row
-    row = len(img)
-    column = len(img[0])
+    row, column = img.shape
     EmptyArray = np.zeros((column, row))
     # Effectuer le changement de coordonne grace a une double for loop
-    for i in range(0, row):
-        for j in range(0, column):
+    for (i, j), value in np.ndenumerate(img):
+            # Changement de base
             coordX = -row + 1 + i
             coordY = column - 1 - j
             # Multiplie les matrice ensemble pour obtenir les nouvelles valeurs de x et y
