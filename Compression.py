@@ -7,23 +7,25 @@ from scipy import signal
 from zplane import zplane
 
 def compression(img, percent):
-    plt.imshow(img)
-    covarianceImg = np.cov(img)
-    valPropre, vecPropre = np.linalg.eig(covarianceImg)
-    vecPropre = vecPropre.T
-    produitDeMatrice = np.matmul(vecPropre, img)
-    for i in range(int(len(produitDeMatrice)*(percent/100))):
-        produitDeMatrice[len(produitDeMatrice)-1-i][:] = 0
+    covariance= np.cov(img)
+    valPropre, vecPropre = np.linalg.eig(covariance)
+    vecPropre = np.transpose(vecPropre)
+    matriceDePassage = np.matmul(vecPropre, img)
+    for i in range(int(len(matriceDePassage)*(percent/100))):
+        matriceDePassage[len(matriceDePassage)-1-i][:] = 0
 
-    matplotlib.image.imsave("imgFinale\\compresse.png", arr=produitDeMatrice, cmap='gray')
+    matplotlib.image.imsave("imgFinale\\compresse.png", arr=matriceDePassage, cmap='gray')
 
+
+    #Decompressé l'image
     # passage_inv = np.inv(vecPropre)
     # imageFinale = np.matmul(vecPropre, img)
-    imageFinale = np.matmul(np.linalg.inv(vecPropre), produitDeMatrice)
-    matplotlib.image.imsave("imgFinale\\decompresse.png", arr=imageFinale, cmap='gray')
+    imageDecompresse = np.matmul(np.linalg.inv(vecPropre), matriceDePassage)
+    matplotlib.image.imsave("imgFinale\\ "+ str(percent) + "decompresse.png", arr=imageDecompresse, cmap='gray')
 
 
-    #plt.imshow(produitDeMatrice)
-    #plt.imshow(imageFinale)
+    #plt.imshow(matriceDePassage, cmap ='gray')
     #plt.title(f"Image compressée de {percent}%")
+    #plt.imshow(imageDecompresse, cmap ='gray')
+    #plt.title(f"Image décompressé suivant la compresse de {percent}%")
     #plt.show()

@@ -5,16 +5,18 @@ import Compression
 import zplane
 
 if __name__ == '__main__':
-    # abberation
+    #abberation
     num = np.poly([0.9*np.exp(np.pi/2j), 0.9*np.exp(-np.pi/2j), 0.95*np.exp(np.pi/8j), 0.95*np.exp(-np.pi/8j)])
     den = np.poly([-0.99, -0.99, 0.8])
     img = np.load("img\\image_complete.npy")
+
     PictureManager.revertAbberation(img, num, den)
 
     #rotation
     #img_color = mpimg.imread("img\\goldhill_rotate.png")
     #img = np.mean(img_color, -1)
-    PictureManager.rotation90degree(img)
+    imageSansAbberation = PictureManager.revertAbberation(img, num, den)
+    PictureManager.rotation90degree(imageSansAbberation)
 
     #Filtre en utilisant la transformation bilinéaire
     a = 0.418163346
@@ -27,10 +29,13 @@ if __name__ == '__main__':
     #img = np.load("img\\goldhill_aberrations.npy")
     #mpimg.imsave("img\\goldhill_bruit.png", arr=img, cmap="gray")
     N, Wn = PictureManager.ComparaisonFiltre(500, 750, 0.2, 60, 1600)
-    PictureManager.filterAndCreateElliFilter(N, Wn, img)
+    imageRotater = PictureManager.rotation90degree(imageSansAbberation)
+    PictureManager.filterAndCreateElliFilter(N, Wn, imageRotater)
 
     #Compression
-    Compression.compression(img, 70)
+    imageFiltre = PictureManager.filterAndCreateElliFilter(N, Wn, imageRotater)
+    Compression.compression(imageFiltre, 50)
+    Compression.compression(imageFiltre, 70)
 
 
 

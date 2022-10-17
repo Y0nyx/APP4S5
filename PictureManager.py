@@ -8,14 +8,15 @@ def revertAbberation(img, num, den):
     #zplane.zplane(den, num)
 
     # Pour comparer, enregistrer l'image avec l'abberation
-    mpimg.imsave("img\\goldhill_abberations.png", arr=img)
+    mpimg.imsave("imgFinale\\ImageAvecAbberations.png", arr=img, cmap="gray")
 
     # Filtre et enregistre l'image finale
     FiltedImg = signal.lfilter(den, num, img)
-    mpimg.imsave("imgFinale\\goldhill_abberations_Finale.png", arr=FiltedImg, cmap="gray")
-    return(img)
+    mpimg.imsave("imgFinale\\ImageSansAbberationsFinale.png", arr=FiltedImg, cmap="gray")
 
-def rotation90degree (img):
+    return(FiltedImg)
+
+def rotation90degree(img):
     # Trouver les longueur des column and row
     row = len(img)
     column = len(img[0])
@@ -28,7 +29,9 @@ def rotation90degree (img):
             # Multiplie les matrice ensemble pour obtenir les nouvelles valeurs de x et y
             x, y = np.matmul([[0, 1], [-1, 0]], [coordX, coordY])
             EmptyArray[x][y] = img[coordX][coordY]
-    mpimg.imsave("imgFinale\\goldhill_rotate_Finale.png", arr=EmptyArray, cmap="gray")
+    mpimg.imsave("imgFinale\\imageAvecRotateFinale.png", arr=EmptyArray, cmap="gray")
+
+    return(EmptyArray)
 
 def ComparaisonFiltre(wp, ws, gpass, gstop, fs):
     N = np.zeros(4)
@@ -48,4 +51,6 @@ def filterAndCreateElliFilter(N, Wn, img):
     num, den = signal.ellip(N, 0.2, 60, Wn, btype='low', analog=False, fs=1600)
     zplane.zplane(num,den)
     imgfilter = signal.lfilter(num, den, img)
-    mpimg.imsave("imgFinale\\goldhill_bruit_Finale.png", arr=imgfilter, cmap="gray")
+    mpimg.imsave("imgFinale\\ImageSansBruitFinale.png", arr=imgfilter, cmap="gray")
+
+    return (imgfilter)
